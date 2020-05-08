@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#000000" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="School Management Application" />
+  <title>Readme :: Frontend Boilerplate</title>
+</head>
+<body>
+  <section class="content">
+    <h1 class="title">Add New Page</h1>
+    <ul>
+      <li>
+        <p>Create a folder inside <code class="highlight">src</code>.</p>
+        <p>As example, create a folder called <code>profile</code>.</p>
+        <p>Example:</p>
+        <pre>
+          <code>src</code>
+           <code class="highlight">|-- profile</code>
+        </pre>
+      </li>
+      <li>
+        <p>Add files <code>html</code>, <code>scss</code> and <code>js</code> files inside the folder you created.</p>
+        <p>Example:</p>
+        <pre>
+          <code>src</code>
+           <code>|-- profile</code>
+                <code class="highlight">|-- index.html</code>
+                <code class="highlight">|-- index.scss</code>
+                <code class="highlight">|-- index.js</code>
+        </pre>
+      </li>
+      <li>
+        <p>Now add a new entry point in <code class="highlight">webpack.common.js</code>.</p>
+        <p>Example:</p>
+        <pre>
+          <code>...</code>
+          <code>entry: {</code>
+            <code>main: path.resolve(__dirname, "src/"),</code>
+            <code>readme: path.resolve(__dirname, "src/readme/"),</code>
+            <code>// more entry points here</code>
+            <code class="highlight">profile: path.resolve(__dirname, "src/profile/"),</code>
+          <code>},</code>
+          <code>...</code>
+        </pre>
+      </li>
+      <li>
+        <p>Now add <code class="highlight">new HtmlWebpackPlugin({...})</code> inside plugins in each <code class="highlight">webpack.dev.js</code> and <br />
+        <code class="highlight">webpack.prod.js</code></p>
+        <p>Example: <code class="highlight">webpack.dev.js</code></p>
+        <pre>
+          <code>...</code>
+          <code>plugins: [</code>
+            <code>new HtmlWebpackPlugin({</code>
+              <code>filename: "index.html",</code>
+              <code>template: path.resolve(__dirname, "src/index.html"),</code>
+              <code>chunks: [ "main" ]</code>
+            <code>}),</code>
+            <code>new HtmlWebpackPlugin({</code>
+              <code>filename: "readme/index.html",</code>
+              <code>template: path.resolve(__dirname, "src/readme/index.html"),</code>
+              <code>chunks: [ "readme" ]</code>
+            <code>})</code>
+            <code>// new HtmlWebpackPlugin for each html file.</code>
+            <code class="highlight">new HtmlWebpackPlugin({</code>
+              <code class="highlight">filename: "profile/index.html",</code>
+              <code class="highlight">template: path.resolve(__dirname, "src/profile/index.html"),</code>
+              <code class="highlight">chunks: [ "profile" ]</code>
+            <code class="highlight">})</code>
+          <code>],</code>
+          <code>...</code>
+        </pre>
+        <p>Example: <code class="highlight">webpack.prod.js</code></p>
+        <pre>
+          <code>...</code>
+          <code>plugins: [</code>
+            <code>...</code>
+            <code class="highlight">new HtmlWebpackPlugin({</code>
+              <code class="highlight">filename: "profile/index.html",</code>
+              <code class="highlight">template: path.resolve(__dirname, "src/profile/index.html"),</code>
+              <code class="highlight">hash: true,</code>
+              <code class="highlight">chunks: [ "profile" ],</code>
+              <code class="highlight">minify: {</code>
+                <code class="highlight">removeComments: true,</code>
+                <code class="highlight">collapseWhitespace: true,</code>
+                <code class="highlight">removeAttributeQuotes: true</code>
+              <code class="highlight">}</code>
+            <code class="highlight">})</code>
+            <code>...</code>
+          <code>],</code>
+          <code>...</code>
+        </pre>
+        <p>
+          <b class="highlight">Note:</b> More chunks can be added in chunks array.<br/>
+          Each chunk denotes an entry point.<br/>
+          Chunk name must be same as entry point.<br/>
+        </p>
+        
+      </li>
+    </ul>
+    <h3><a href="/" class="link">Back</a></h3>
+  </section>
+</body>
+</html>

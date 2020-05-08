@@ -1,0 +1,28 @@
+.content {
+  .icons {
+    margin: 50px auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    & > img {
+      position: relative;
+      top: 0;
+      width: 100px;
+      height: auto;
+      cursor: pointer;
+      transition: all 0.5s ease;
+
+      &:hover {
+        top: -10px;
+      }
+    }
+  }
+
+  .info {
+    padding: 10px;
+    background-color: #4d4d4d;
+    color: #fff;
+    border-radius: 5px;
+  }
+}
