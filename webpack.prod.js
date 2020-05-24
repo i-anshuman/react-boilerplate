@@ -8,63 +8,81 @@ const TerserWebpackPlugin    = require('terser-webpack-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = merge(common, {
-  mode: "production",
+  mode: 'production',
+  devtool: 'source-map',
   output: {
-    filename: "assets/js/[name].[contentHash:5].js",
-    path: path.resolve(__dirname, "build")
+    filename: 'static/js/[name].[contentHash:5].js',
+    path: path.resolve(__dirname, 'build'),
+    publicPath: '/'
   },
   optimization: {
     minimizer: [
       new OptimizeCssAssetsWebpackPlugin(),
-      new TerserWebpackPlugin()
+      new TerserWebpackPlugin({
+        sourceMap: true,
+        extractComments: true
+      })
     ]
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "assets/css/[name].[contentHash:5].css"
+      filename: 'static/css/[name].[contentHash:5].css'
     }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: path.resolve(__dirname, "src/index.html"),
+      filename: 'index.html',
+      template: path.resolve(__dirname, 'public/index.html'),
       hash: true,
-      chunks: [ "main" ],
+      chunks: [ 'main' ],
       minify: {
         removeComments: true,
         collapseWhitespace: true,
-        removeAttributeQuotes: true
-      }
-    }),
-    new HtmlWebpackPlugin({
-      filename: "readme/index.html",
-      template: path.resolve(__dirname, "src/readme/index.html"),
-      hash: true,
-      chunks: [ "readme" ], // more chunks can be added. Chunk name is same as keys in entrypoint.
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
+        removeAttributeQuotes: true,
+        minifyCSS: true,
+        minifyJS: true
       }
     })
-    // new HtmlWebpackPlugin for each html file.
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [ MiniCssExtractPlugin.loader, "css-loader" ]
+        use: [
+          MiniCssExtractPlugin.loader, 
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                mode: 'local',
+                localIdentName: '[hash:base64:5]'
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.s[ac]ss$/,
-        use: [ MiniCssExtractPlugin.loader, "css-loader", "sass-loader" ]
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                mode: 'local',
+                localIdentName: '[hash:base64:5]'
+              }
+            }
+          },
+          'sass-loader'
+        ]
       },
       {
-        test: /\.(svg|png|jpg|gif|jpeg)$/,
+        test: /\.(svg|png|gif|jpe?g)$/,
         use: {
-          loader: "file-loader",
+          loader: 'file-loader',
           options: {
-            name: "[name].[hash:5].[ext]",
-            outputPath: "assets/images"
+            name: '[name].[hash:5].[ext]',
+            outputPath: 'static/media'
           }
         }
       }
