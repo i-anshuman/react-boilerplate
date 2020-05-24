@@ -22,25 +22,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.content {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #2d2d2d;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .link {
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.5s ease;
-
-    &:hover {
-      color: #3b9efa;
-    }
-  }
-}

@@ -1,7 +1,13 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './global.scss';
-import './index.scss';
+import App from './app';
+//import * as serviceWorker from './serviceWorker';
 
-(() => {
-  console.log("pathname: /");
-  console.log("JavaScript for each modele in their respective .js file.");
-})();
+ReactDOM.render(
+  <React.StrictMode>
+    <App /> 
+  </React.StrictMode>,
+  document.getElementById('app')
+);
+//serviceWorker.unregister();
