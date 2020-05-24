@@ -1,23 +1,46 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  devtool: "source-map",
   entry: {
-    main: path.resolve(__dirname, "src/"),
-    readme: path.resolve(__dirname, "src/readme/"),
-    // more entry points here
+    main: path.resolve(__dirname, 'src/')
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'public' }]
+    }),
+  ],
   module: {
     rules: [
       {
         test: /\.html$/,
-        use: ["html-loader"]
+        use: [ 'html-loader' ]
       },
       { 
-        test: /\.js$/, 
+        test: /\.js(x)?$/, 
         exclude: /node_modules/, 
-        loader: "babel-loader"
+        use: [
+          'babel-loader', 
+          {
+            loader: 'eslint-loader',
+            options: {
+              emitError: true,
+              emitWarning: true,
+              failOnError: true,
+              failOnWarning: false
+            }
+          }
+        ]
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: false,
+    },
+    runtimeChunk: {
+      name: entrypoint => `runtime-${entrypoint.name}`
+    },
   }
 };
